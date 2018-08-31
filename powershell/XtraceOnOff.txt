@@ -1,0 +1,28 @@
+##########Xtrace on ######
+$registryPath= "hklm:\SOFTWARE\LANDesk\ManagementSuite\LogOptions"
+$LogInfo= "logInfo"
+$LogType= "LogType"
+$LogVerbose="LogVerbose"
+$LogXtrace="LogXTrace"
+$value= 1
+
+set-ItemProperty $registryPath -Name $LogInfo -Value $value 
+set-ItemProperty $registryPath -Name $LogType -Value $value 
+set-ItemProperty $registryPath -Name $LogVerbose -Value $value 
+set-ItemProperty $registryPath -Name $LogXtrace -Value $value
+
+
+###Xtrace off########
+
+
+$registryPath= "hklm:\SOFTWARE\LANDesk\ManagementSuite\LogOptions"
+$LogInfo= "logInfo"
+$LogType= "LogType"
+$LogVerbose="LogVerbose"
+$LogXtrace="LogXTrace"
+$value= 0
+
+set-ItemProperty $registryPath -Name $LogInfo -Value $value 
+set-ItemProperty $registryPath -Name $LogType -Value $value 
+set-ItemProperty $registryPath -Name $LogVerbose -Value $value 
+set-ItemProperty $registryPath -Name $LogXtrace -Value $value

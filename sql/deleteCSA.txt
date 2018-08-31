@@ -1,0 +1,3 @@
+delete from BrokerConfig where BrokerConfig_IDN = 1
+
+select * from BrokerConfig 

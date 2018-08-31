@@ -1,0 +1,36 @@
+
+
+#Update the boot wim so that you can use mouse on VM pxe boot
+
+#Change dir to AIK to use newest dism
+cd "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\DISM"
+
+
+#Mount wim
+$MountingWIM= "C:\bootwim\config1\wim1\boot.wim"
+$MountedFolder="C:\bootwim\config1\mount1"
+
+dism /mount-wim /wimfile:$MountingWIM /index:1 /mountdir:$MountedFolder
+
+
+#update FUCKING dism
+$env:path = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM"
+
+import-module "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM"
+
+dism /?
+
+
+#add drivers
+$driver ="C:\bootwim\drivers\vss"
+dism.exe /image:$MountedFolder /add-driver /driver:$driver /recurse
+
+
+#Check if drivers are updated
+DISM /Image:$MountedFolder /get-drivers
+
+
+#Commit changes
+dism /unmount-wim /mountdir:$MountedFolder /commit
+
+

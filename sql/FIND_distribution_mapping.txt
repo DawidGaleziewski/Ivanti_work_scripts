@@ -1,0 +1,4 @@
+   select * from ReturnCodeTemplate RCT
+   left outer join ReturnCodeMapping RCM
+   on RCT.ReturnCodeTemplate_Idn= RCM.ReturnCodeTemplate_Idn
+   where RCM.EnuDescription like'%many%'

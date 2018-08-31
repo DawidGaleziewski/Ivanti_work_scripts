@@ -1,0 +1,79 @@
+
+###Check web.config thumbprints###
+
+$CommonServicePath= $env:LDMS_HOME + "LANDesk\ManagementSuite\Core\CommonServices\web.config"
+$Console= $env:LDMS_HOME + "landesk\managementsuite\core\console\web.config"
+$IdentityServer =  $env:SystemDrive + "\Program Files\LANDESK\Identity Server\web.config"
+$remote= $env:SystemDrive + "\inetpub\wwwroot\LANDesk\LDMS\web.config"
+$sam= $env:LDMS_HOME + "LANDesk\SAM\samserver\web.config"
+$samWebConsole=  $env:LDMS_HOME + "LANDesk\SAM\samwebconsole\web.config"
+
+
+$env:LDMS_HOME
+$env:computername
+$env:SystemDrive
+
+
+
+Write-host ("###CommonService###")
+[xml]$contentCommonServiceC= Get-Content $CommonServicePath
+
+
+Write-host ("###Console###")
+[xml]$consoleC= Get-Content $Console
+
+
+Write-host ("###IdentityServer###")
+[xml]$IdentityServerC= Get-Content $IdentityServer
+
+
+Write-host ("###Remote###")
+[xml]$RemoteC= Get-Content $remote
+
+
+Write-host ("###SAM###")
+[xml]$SamC= Get-Content $sam
+
+
+Write-host ("###SAMweb###")
+[xml]$samWebConsoleC= Get-Content $samWebConsole
+
+
+
+
+[array]$webConfigs= $consoleC, $IdentityServerC, $RemoteC, $SamC, $samWebConsoleC, $contentCommonServiceC
+
+
+foreach ($webconfig in $webconfigs)
+{
+   
+    
+    if (
+        ($webconfig.configuration.appSettings.add | ? {$_.key  -like 'STSCert'}).value -eq 
+        ($webconfig.configuration.appSettings.add | ? {$_.key  -like 'encryptionCert' }).value
+    )
+
+    {
+    Write-Host("STS cert is same as  encryption cert")
+    }
+    else
+    {
+    Write-Host(" something is wrong") -BackgroundColor DarkRed
+    }
+        foreach ($othercerts in $webconfigs)
+   
+        {
+           if (($webconfig.configuration.appSettings.add | ? {$_.key  -like 'STSCert'}).value -eq ($othercerts.configuration.appSettings.add | ? {$_.key  -like 'STSCert'}).value)
+           {
+           write-host ("This is fine")
+           }
+           else 
+           {
+           write-host ("Error here") -BackgroundColor Red
+           }
+        }
+}
+
+
+
+

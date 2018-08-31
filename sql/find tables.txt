@@ -1,0 +1,5 @@
+
+select name
+  from sys.tables
+ where name like '%team%'
+   and is_ms_shipped = 0; 

@@ -1,0 +1,32 @@
+
+Function Compare-hash ($fileA, $fileB) {
+    $TestPath= Test-Path c:\CompareHashes\A, c:\CompareHashes\B
+    if ($TestPath -contains $false)
+    {New-Item "c:\CompareHashes\A", "c:\CompareHashes\B" -ItemType directory}
+
+    Remove-Item –path c:\CompareHashes\A\* , c:\CompareHashes\B\*
+
+    Copy-Item  $fileA -Destination c:\CompareHashes\A
+    "$fileB"
+    Copy-Item  $fileB -Destination c:\CompareHashes\B
+  
+    
+
+
+    $hashA= Get-FileHash c:\CompareHashes\A\*
+    $hashB= Get-FileHash c:\CompareHashes\B\*
+
+       if ($hashA.Hash -match $hashB.Hash)
+            {write-host ("Hashes are the same
+            $hashA.Hash
+            $hashB.Hash") -BackgroundColor black}
+        elseif ($hashA.Hash -notmatch $hashB.Hash)
+            {write-host ("Hashes are DIFFRENT
+            $hashA.Hash
+            $hashB.Hash") -BackgroundColor red}
+}
+ 
+$fileA= "C:\AuthorizationService.log" 
+$fileB="C:\DeleteErrorS.bat"
+
+Compare-hash $fileA $fileB

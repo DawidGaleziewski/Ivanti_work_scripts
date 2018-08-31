@@ -1,0 +1,7 @@
+select TASK_NAME as [name of the task], q.name as [query name], q.Filter as [filter used]
+from ScheduledQueries SQ
+left outer join query Q
+on sq.Query_Idn=q.Query_Idn
+Left outer join ld_task LDT
+on sq.LD_TASK_IDN= ldt.LD_TASK_IDN
+where q.name like '%TestQ1%'

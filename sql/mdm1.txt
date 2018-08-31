@@ -1,0 +1,3 @@
+SELECT os.ostype, os.version, os.Computer_Idn
+  FROM [Operating_System] OS
+  Where os.OSType= 'android' and os.version= '8.0.0' 

@@ -1,0 +1,20 @@
+select 
+    t.name as TableWithForeignKey, 
+    fk.constraint_column_id as FK_PartNo, c.name as ForeignKeyColumn 
+from 
+    sys.foreign_key_columns as fk
+inner join 
+    sys.tables as t on fk.parent_object_id = t.object_id
+inner join 
+    sys.columns as c on fk.parent_object_id = c.object_id and fk.parent_column_id = c.column_id
+where c.name like 'Computer_idn' 
+
+
+
+SELECT i.name AS IndexName, OBJECT_NAME(ic.OBJECT_ID) AS TableName, 
+       COL_NAME(ic.OBJECT_ID,ic.column_id) AS ColumnName
+FROM sys.indexes AS i
+INNER JOIN sys.index_columns AS ic
+ON i.OBJECT_ID = ic.OBJECT_ID
+AND i.index_id = ic.index_id
+WHERE i.is_primary_key = 1 and i.name like 'XPKComputer'

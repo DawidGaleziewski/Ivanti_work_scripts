@@ -1,0 +1,8 @@
+$IISlog= Get-ChildItem "$env:SystemDrive\inetpub\logs\LogFiles\W3SVC1\u_ex*" | sort LastWriteTime -Descending 
+$array= (Get-Content $IISlog[0])[10].Split(" ")
+
+$date= $array[0] -match '..-..-..'
+$time= $array[1] -match '..\:..\:..'
+$fromHost = $array[2] -match '[1-9]'
+$Action= $array[3] -match '[A-Z]'
+$ToHost= $array[4] -match '\*'

@@ -1,0 +1,6 @@
+Select 
+C.DeviceName, C.DisplayName,C.DeviceId, C.MDMID, BC.CertHash
+from Computer C
+Inner join BrokerCert BC
+on bc.BrokerCert_Idn= c.Computer_Idn
+WHERE C.Type='MobileDevice' and  C.DeviceName like '%Galaxy S8%'

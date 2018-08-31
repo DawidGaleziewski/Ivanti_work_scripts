@@ -1,0 +1,36 @@
+$DatabaseData= Import-Csv C:\ExportTemplatesFromDb\FromDB.csv
+$DatabaseData
+
+[xml]$xmlSchema= Get-Content C:\ExportTemplatesFromDb\TestPs1name.ldms
+
+
+$DatabaseData
+
+
+$xmlSchema.ExportableContainer.RemoteConsole -eq $DatabaseData[0].SourceCore
+# $xmlSchema.ExportableContainer.LastSavedDate -eq $DatabaseData[0].LastSavedDate
+$xmlSchema.ExportableContainer.Name  -eq $DatabaseData[0].Name
+$xmlSchema.ExportableContainer.Items.Exportable 
+    $xmlSchema.ExportableContainer.Items.Exportable.LastSavedBy -eq  $DatabaseData[0].LastSavedBy
+    $xmlSchema.ExportableContainer.Items.Exportable.Revision -eq $DatabaseData[0].Revision
+    $xmlSchema.ExportableContainer.Items.Exportable.Owner -eq $DatabaseData[0].LastSavedBy.split('\')[1]
+    $xmlSchema.ExportableContainer.Items.Exportable.EnuName -eq $DatabaseData[0].Name
+
+
+foreach ($DatabaseData1 in $DatabaseData)
+{
+$NodeToClone= $xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0] 
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].ReturnCodeMapping_Idn -eq $DatabaseData[0].ReturnCodeMapping_Idn
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].ReturnCodeTemplate_Idn -eq $DatabaseData[0].ReturnCodeTemplate_Idn
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].ReturnCode -eq $DatabaseData[0].ReturnCode
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].MapToCode -eq $DatabaseData[0].MapToCode
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].EnuDescription -eq $DatabaseData[0].EnuDescription
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].ID -eq $DatabaseData[0].ReturnCodeMapping_Idn
+}
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping
+
+$NodeToClone= $xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping[0].Clone() 
+$NodeToClone
+
+
+$xmlSchema.ExportableContainer.Items.Exportable.Mappings.DBReturnCodeMapping.  ($NodeToClone)

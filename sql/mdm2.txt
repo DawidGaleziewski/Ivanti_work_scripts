@@ -1,0 +1,7 @@
+SELECT os.ostype, os.version, os.Computer_Idn, C.DeviceName, C.DisplayName,C.DeviceId, C.MDMID, BC.CertHash
+  FROM [Operating_System] OS
+  Left outer join Computer C
+  on os.Computer_Idn= c.Computer_Idn
+  left outer join BrokerCert BC
+  on c.Computer_Idn= BC.BrokerCert_Idn
+  Where os.OSType= 'android' and os.version= '8.0.0' 

@@ -1,0 +1,1 @@
+dism /online /get-packages | findstr 4011626 >> %userdomain%.txt

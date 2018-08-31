@@ -1,0 +1,46 @@
+Mount
+dism /mount-wim /wimfile:"C:\bootwim\config1\orginal\boot_x64.wim" /index:1
+/mountdir:"C:\bootwim\config1\mount"
+
+fdqn
+net config workstation | findstr /C:"Full Computer name"
+
+dism /unmount-wim /mountdir:c:\bootwim /commit
+
+Dism /Image:C:\test\offline /Add-Driver /Driver:C:\drivers\mydriver.inf
+
+
+DISM /image:c:\bootimage\mount /Add-Driver /driver:E:\networkdrivers\PRO1000\Win32\NDIS62 /recurse
+
+DISM /Image:c:\bootimage\mount /get-drivers
+
+
+upgrade dism by install aik and adk
+
+C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\DISM
+
+New-Alias -Name dism -Value "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM\Dism.exe"
+
+
+
+
+
+C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment
+Tools\x86\DISM>Dism.exe /Image:C:\bootwim\config1\mount /Add-Driver /Driver:C:\b
+ootwim\drivers\audio
+
+
+
+
+
+
+#Change dir to AIK to use newest dism
+cd "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\DISM"
+cd c:\
+
+#Mount wim
+$MountingWIM= "C:\bootwim\config1\wim"
+$MountedFolder="C:\bootwim\config1\mount"
+
+dism /mount-wim /wimfile:$MountingWIM /index:1 /mountdir:$MountedFolder
+dism /mount-wim /wimfile:C:\bootwim\config1\wim /index:1 /mountdir:C:\bootwim\config1\mount
